@@ -11,7 +11,30 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/hashicorp/go-cleanhttp"
 )
+
+func applyConfigOpts(cf *Config, opts ...ConfigOption) {
+	for _, opt := range opts {
+		opt(cf)
+	}
+}
+
+func compileConfig(userConf *Config, opts ...ConfigOption) *Config {
+	actual := new(Config)
+	if userConf != nil {
+		*actual = *userConf
+	}
+	applyConfigOpts(actual, opts...)
+	if actual.Address == "" {
+		actual.Address = DefaultAddress
+	}
+	if actual.HTTPClient == nil {
+		actual.HTTPClient = cleanhttp.DefaultPooledClient()
+	}
+	return actual
+}
 
 func setBearerToken(req *http.Request, token string) {
 	const f = "Bearer %s"

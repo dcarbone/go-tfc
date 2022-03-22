@@ -47,6 +47,8 @@ type Config struct {
 	HTTPClient *http.Client
 }
 
+type ConfigOption func(*Config)
+
 type clientMiddleware struct {
 	addr string
 	hc   *http.Client
@@ -113,14 +115,16 @@ type Client struct {
 
 // NewClient constructs a new client instance based upon the provided configuration.  Specific-intent clients are
 // chained from this base client instance.
-func NewClient(cfg *Config) (*Client, error) {
+func NewClient(cfg *Config, opts ...ConfigOption) (*Client, error) {
 	var (
 		err error
 
 		tc = new(Client)
 	)
 
-	if tc.m, err = newClientMiddleware(cfg); err != nil {
+	conf := compileConfig(cfg, opts...)
+
+	if tc.m, err = newClientMiddleware(conf); err != nil {
 		return nil, err
 	}
 

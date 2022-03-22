@@ -31,5 +31,8 @@ func UploadArtifact(ctx context.Context, data FileUploadRequest) error {
 	req.Header.Set(headerContentType, data.ContentType)
 	req.Header.Set(headerContentDisposition, fmt.Sprintf(attachmentFilenameFmt, data.Filename))
 	resp, err := UploadClient.Do(req)
-	return handleResponse(req, resp, err, nil, http.StatusOK)
+	if err != nil {
+		return err
+	}
+	return handleResponse(req, resp, nil, http.StatusOK)
 }

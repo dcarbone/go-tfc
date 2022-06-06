@@ -15,6 +15,10 @@ func (c *Client) ProviderClient() *ProviderClient {
 	return &ProviderClient{m: c.m}
 }
 
+func (tc *)  {
+	
+}
+
 // CreateProviderVersion
 //
 // Executes: POST /api/v2/organizations/:organization_name/registry-providers/:registry_name/:namespace/:provider_name/versions
@@ -22,8 +26,8 @@ func (c *Client) ProviderClient() *ProviderClient {
 func (tc *ProviderClient) CreateProviderVersion(
 	ctx context.Context,
 	bearerToken,
-	organizationName,
-	registryName,
+	organizationName string,
+	registryName RegistryType,
 	namespace,
 	providerName string,
 	data CreateProviderVersionRequest,

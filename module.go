@@ -22,8 +22,8 @@ func (c *Client) ModuleClient() *ModuleClient {
 func (mc *ModuleClient) CreateModuleVersion(
 	ctx context.Context,
 	bearerToken,
-	organizationName,
-	registryName,
+	organizationName string,
+	registryName RegistryType,
 	namespace,
 	moduleName,
 	providerName string,

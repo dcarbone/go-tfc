@@ -55,8 +55,11 @@ func buildRoute(parts ...interface{}) string {
 			if p.(*int) != nil {
 				v = strconv.Itoa(*p.(*int))
 			}
+		case fmt.Stringer:
+			v = p.(fmt.Stringer).String()
+
 		default:
-			panic(fmt.Sprintf("no path part handler defined for type \"%T\" (%[1]v)", p))
+			v = fmt.Sprintf("%v", p)
 		}
 		if v != "" {
 			partStrs = append(partStrs, v)

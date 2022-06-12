@@ -97,14 +97,11 @@ type Relationships struct {
 	RegistryProviderVersion   *Entity `json:"registry-provider-version,omitempty"`
 }
 
-type ProviderDataAttributes struct {
-}
-
 type ProviderData struct {
 	EntityData
-	Attributes    ProviderDataAttributes `json:"attributes"`
-	Links         Links                  `json:"links"`
-	Relationships Relationships          `json:"relationships"`
+	Attributes    EntityDataAttributes `json:"attributes"`
+	Links         Links                `json:"links"`
+	Relationships Relationships        `json:"relationships"`
 }
 
 type Provider struct {
